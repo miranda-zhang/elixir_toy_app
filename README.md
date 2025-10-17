@@ -1,1 +1,1 @@
-# elixir_toy_app
+# Elixir_Toy App Backend
