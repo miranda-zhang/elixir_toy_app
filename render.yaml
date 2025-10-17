@@ -4,7 +4,7 @@ services:
     env: elixir
     rootDir: backend
     buildCommand: mix deps.get && mix compile && mix ecto.migrate
-    startCommand: _build/prod/rel/backend/bin/backend start
+    startCommand: startCommand: mix phx.server
     plan: free
     envVars:
       - key: DATABASE_URL
