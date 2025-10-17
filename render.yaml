@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: elixir-toy-app-backend
+    env: elixir
+    rootDir: backend
+    buildCommand: mix deps.get && mix compile && mix ecto.migrate
+    startCommand: _build/prod/rel/backend/bin/backend start
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: elixir-toy-app-db
+          property: connectionString
+      - key: SECRET_KEY_BASE
+        generateValue: true
+
+databases:
+  - name: elixir-toy-app-db
