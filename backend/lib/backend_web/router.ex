@@ -5,10 +5,34 @@ defmodule BackendWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", BackendWeb do
+  # ============================
+  # GraphQL API
+  # ============================
+  scope "/api" do
     pipe_through :api
+
+    # GraphQL endpoint for app/clients
+    # /api → your GraphQL endpoint for API calls
+    # /api/graphiql → opens an interactive browser playground
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+    schema: BackendWeb.Schema,
+    interface: :playground
+
+    forward "/", Absinthe.Plug,
+      schema: BackendWeb.Schema
+
+    # GraphiQL IDE (only enabled in dev)
+    if Mix.env() == :dev do
+      forward "/graphiql",
+        Absinthe.Plug.GraphiQL,
+        schema: BackendWeb.Schema,
+        interface: :simple
+    end
   end
 
+  # ============================
+  # LiveDashboard + Mailbox (dev only)
+  # ============================
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:backend, :dev_routes) do
     # If you want to use the LiveDashboard in production, you should put
