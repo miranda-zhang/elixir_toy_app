@@ -9,10 +9,7 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: elixir-toy-app-db
+          name: elixir_toy_app_db   # must exactly match your existing Render DB name
           property: connectionString
       - key: SECRET_KEY_BASE
         generateValue: true
-
-databases:
-  - name: elixir-toy-app-db
