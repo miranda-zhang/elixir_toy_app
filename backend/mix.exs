@@ -54,7 +54,9 @@ defmodule Backend.MixProject do
       {:bandit, "~> 1.5"},
       {:absinthe, "~> 1.7"},
       {:absinthe_relay, "~> 1.5"},
-      {:absinthe_plug, "~> 1.5"}
+      {:absinthe_plug, "~> 1.5"},
+      {:bcrypt_elixir, "~> 3.0"},
+      {:joken, "~> 2.6"}
     ]
   end
 

@@ -5,6 +5,7 @@ defmodule BackendWeb.Schema do
   import_types Absinthe.Type.Custom
   import_types BackendWeb.Schema.UserTypes
   import_types BackendWeb.Schema.QueryTypes
+  import_types BackendWeb.Schema.MutationTypes
 
   node interface do
     resolve_type fn
@@ -16,4 +17,9 @@ defmodule BackendWeb.Schema do
   query do
     import_fields :root_query
   end
+
+  mutation do
+    import_fields :user_mutations
+  end
+
 end

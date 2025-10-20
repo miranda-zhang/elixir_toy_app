@@ -11,35 +11,26 @@ defmodule BackendWeb.Router do
   scope "/api" do
     pipe_through :api
 
-    # GraphQL endpoint for app/clients
-    # /api → your GraphQL endpoint for API calls
-    # /api/graphiql → opens an interactive browser playground
-    forward "/graphiql", Absinthe.Plug.GraphiQL,
-    schema: BackendWeb.Schema,
-    interface: :playground
+    # GraphiQL interactive playground (only for dev)
+    # /api/graphiql → opens browser playground
+    if Mix.env() == :dev do
+      forward "/graphiql", Absinthe.Plug.GraphiQL,
+        schema: BackendWeb.Schema,
+        interface: :playground,
+        socket: BackendWeb.UserSocket,
+        default_url: "/api"
+    end
 
+    # GraphQL endpoint for API calls
+    # /api → GraphQL endpoint for frontend
     forward "/", Absinthe.Plug,
       schema: BackendWeb.Schema
-
-    # GraphiQL IDE (only enabled in dev)
-    if Mix.env() == :dev do
-      forward "/graphiql",
-        Absinthe.Plug.GraphiQL,
-        schema: BackendWeb.Schema,
-        interface: :simple
-    end
   end
 
   # ============================
   # LiveDashboard + Mailbox (dev only)
   # ============================
-  # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:backend, :dev_routes) do
-    # If you want to use the LiveDashboard in production, you should put
-    # it behind authentication and allow only admins to access it.
-    # If your application does not have an admins-only section yet,
-    # you can use Plug.BasicAuth to set up some basic authentication
-    # as long as you are also using SSL (which you should anyway).
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
