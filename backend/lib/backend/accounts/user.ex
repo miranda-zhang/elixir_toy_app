@@ -6,7 +6,7 @@ defmodule Backend.Accounts.User do
     field :email, :string
     field :hashed_password, :string
     field :password, :string, virtual: true
-
+    field :phone_number, :string
     timestamps()
   end
 

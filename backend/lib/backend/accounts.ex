@@ -20,4 +20,12 @@ defmodule Backend.Accounts do
       _ -> {:error, "Invalid email or password"}
     end
   end
+
+  def update_phone_number(user_id, phone_number) do
+    user = Repo.get!(User, user_id)
+
+    user
+    |> Ecto.Changeset.change(phone_number: phone_number)
+    |> Repo.update()
+  end
 end

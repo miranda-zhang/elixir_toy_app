@@ -3,6 +3,7 @@ defmodule BackendWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug BackendWeb.Plugs.Context
   end
 
   # ============================
@@ -17,14 +18,18 @@ defmodule BackendWeb.Router do
       forward "/graphiql", Absinthe.Plug.GraphiQL,
         schema: BackendWeb.Schema,
         interface: :playground,
-        socket: BackendWeb.UserSocket,
-        default_url: "/api"
+        # socket: BackendWeb.UserSocket,
+        default_url: "/api",
+        json_codec: Jason,
+        camelize: :lower
     end
 
     # GraphQL endpoint for API calls
     # /api → GraphQL endpoint for frontend
     forward "/", Absinthe.Plug,
-      schema: BackendWeb.Schema
+      schema: BackendWeb.Schema,
+      json_codec: Jason,
+      camelize: :lower
   end
 
   # ============================

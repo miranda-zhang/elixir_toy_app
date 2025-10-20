@@ -11,7 +11,9 @@ defmodule BackendWeb.Schema.MutationTypes do
       resolve fn args, _ ->
         case Accounts.register_user(args) do
           {:ok, user} -> {:ok, user}
-          {:error, _changeset} -> {:error, "Registration failed"}
+          {:error, changeset} ->
+            # Extract human-readable messages from the Ecto.Changeset
+            {:error, format_changeset_errors(changeset)}
         end
       end
     end
@@ -31,5 +33,30 @@ defmodule BackendWeb.Schema.MutationTypes do
         end
       end
     end
+
+    field :add_phone_number, type: :user do
+      arg :phone_number, non_null(:string)
+      middleware BackendWeb.Middleware.Authenticate  # 👈 Require auth
+
+      resolve fn %{phone_number: phone_number}, %{context: %{current_user: user}} ->
+        case Backend.Accounts.update_phone_number(user.id, phone_number) do
+          {:ok, updated_user} -> {:ok, updated_user}
+          {:error, _changeset} -> {:error, "Failed to update phone number"}
+        end
+      end
+    end
+  end
+
+  # 👇 Helper function lives *inside* this module (not outside)
+  defp format_changeset_errors(changeset) do
+    Ecto.Changeset.traverse_errors(changeset, fn {msg, opts} ->
+      Enum.reduce(opts, msg, fn {key, value}, acc ->
+        String.replace(acc, "%{#{key}}", to_string(value))
+      end)
+    end)
+    |> Enum.map(fn {field, messages} ->
+      "#{field} #{Enum.join(messages, ", ")}"
+    end)
+    |> Enum.join("; ")
   end
 end

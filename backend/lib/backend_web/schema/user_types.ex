@@ -5,6 +5,7 @@ defmodule BackendWeb.Schema.UserTypes do
   node object(:user) do
     field :name, :string
     field :email, :string
+    field :phone_number, :string
   end
 
   connection node_type: :user
