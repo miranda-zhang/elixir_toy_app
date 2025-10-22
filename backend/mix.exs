@@ -56,7 +56,8 @@ defmodule Backend.MixProject do
       {:absinthe_relay, "~> 1.5"},
       {:absinthe_plug, "~> 1.5"},
       {:bcrypt_elixir, "~> 3.0"},
-      {:joken, "~> 2.6"}
+      {:joken, "~> 2.6"},
+      {:cors_plug, "~> 3.0"}
     ]
   end
 
@@ -72,7 +73,9 @@ defmodule Backend.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"]
+      precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"],
+      "schema.gen": ["absinthe.schema.sdl --schema BackendWeb.Schema --output priv/schema.graphql"],
+      compile: ["compile", "schema.gen"]
     ]
   end
 end

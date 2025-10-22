@@ -1,0 +1,31 @@
+schema {
+  mutation: RootMutationType
+  query: RootQueryType
+}
+
+interface Node {
+  "The ID of the object."
+  id: ID!
+}
+
+type RootQueryType {
+  node(id: ID!): Node
+  hello: String
+}
+
+type RootMutationType {
+  registerUser(email: String!, password: String!): User
+  loginUser(email: String!, password: String!): String
+  addPhoneNumber(phoneNumber: String!): User
+}
+
+type User implements Node {
+  "The ID of an object"
+  id: ID!
+
+  name: String
+
+  email: String
+
+  phoneNumber: String
+}
