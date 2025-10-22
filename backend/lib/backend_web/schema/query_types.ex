@@ -1,6 +1,7 @@
 defmodule BackendWeb.Schema.QueryTypes do
   use Absinthe.Schema.Notation
   alias Absinthe.Relay.Node
+  alias BackendWeb.Resolvers.UserResolver  # 👈 add this line
 
   object :root_query do
     field :node, :node do
@@ -14,5 +15,10 @@ defmodule BackendWeb.Schema.QueryTypes do
     field :hello, :string do
       resolve(fn _, _, _ -> {:ok, "Hello from Absinthe!"} end)
     end
+
+    field :me, :user do
+      resolve(&UserResolver.me/3)
+    end
+
   end
 end

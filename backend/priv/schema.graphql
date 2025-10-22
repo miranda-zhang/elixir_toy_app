@@ -11,6 +11,7 @@ interface Node {
 type RootQueryType {
   node(id: ID!): Node
   hello: String
+  me: User
 }
 
 type RootMutationType {

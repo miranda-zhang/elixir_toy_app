@@ -9,7 +9,7 @@ defmodule BackendWeb.Endpoint do
       "http://127.0.0.1:5173",
       "http://127.0.0.1:3000",
       # Add your production frontend URL here when deployed
-      "https://miranda-zhang.github.io/vite_react_toy_frontend/"
+      "https://miranda-zhang.github.io"
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
