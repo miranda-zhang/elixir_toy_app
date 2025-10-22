@@ -1,6 +1,6 @@
 # Elixir_Toy App Backend
 👉 [https://elixir-toy-app-backend.onrender.com/api](https://elixir-toy-app-backend.onrender.com/api)
-(Note: it may take about 10 seconds to wake up after inactivity.)
+(Note: it may take about 3 mins to wake up after inactivity.)
 
 ```bash
 # Test connection
@@ -24,3 +24,4 @@ curl -X POST https://elixir-toy-app-backend.onrender.com/api \
   -H "Authorization: Bearer <JWT_TOKEN>" \
   -d '{"query": "mutation { addPhoneNumber(phoneNumber: \"+61412345678\") { id email phoneNumber } }"}'
 ```
+See [docs](./doc/toy_app.md)
