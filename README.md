@@ -1,6 +1,10 @@
 # Elixir_Toy App Backend
-👉 [https://elixir-toy-app-backend.onrender.com/api](https://elixir-toy-app-backend.onrender.com/api)
-(Note: it may take about 3 mins to wake up after inactivity.)
+Free Render.com PostgreSQL database suspended on 2025-11-16.
+Backend free plan not working please try locally.
+
+Render.com endpoint [https://elixir-toy-app-backend.onrender.com/api](https://elixir-toy-app-backend.onrender.com/api)
+
+
 
 ```bash
 # Test connection
